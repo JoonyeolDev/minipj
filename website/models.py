@@ -19,8 +19,6 @@ class User(UserMixin):
         self.nickname = nickname
         self.password = password
         self.notes = notes or [] 
-
-
     def save(self):
         user_data = {
             'email': self.email,
@@ -28,8 +26,8 @@ class User(UserMixin):
             'password': self.password,
             'notes': [note_data for note_data in self.notes]
         }
-        db.users.insert_one(user_data)
-
+        result = db.users.insert_one(user_data)
+        self._id = result.inserted_id
     @classmethod
     def get(cls, email):
         user_data = db.users.find_one({'email': email})
@@ -40,10 +38,8 @@ class User(UserMixin):
                     notes=[Note.get(note_id) for note_id in user_data['notes']])
         else:
             return None
-        
     def get_id(self):
         return str(self.email)
-    
 
 
 
@@ -63,8 +59,8 @@ class Note:
             'datetime': self.datetime,
             'user_id': self.user_id
         }
-        result = db.notes.insert_one(note_data)
-        self._id = result.inserted_id
+        db.notes.insert_one(note_data)
+
 
     @classmethod
     def get(cls, note_id):

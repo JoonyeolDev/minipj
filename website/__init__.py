@@ -6,7 +6,6 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 # 로그인이 필요할 때 redirect(or redirection)할 view를 설정
 from flask_login import LoginManager
-
 client = MongoClient('mongodb+srv://joonyeol:1234@sparta.afgjtfy.mongodb.net/?retryWrites=true&w=majority')
 db = client.dbsparta
 
@@ -36,21 +35,22 @@ def create_app():
 # auth.py ㄱㄱ
 
     # DB에 사용할 모델 불러오기
-    from .models import User, Note  # from .models import *
+    from .models import User, Note
 
     # flask-login 적용
     
     # 각 라우터 위에 @login_required 한 것들은 로그인이 필요한 곳이라 정의
     # 다음 코드로 로그인 뷰를 지정했기 때문에 /sign_in으로 이동함
-    # login_manager = LoginManager()
+    login_manager = LoginManager()
     # login_manager.login_view = 'auth.sign_in'
-    # login_manager.init_app(app)
+    login_manager.init_app(app)
     
-    # @login_manager.user_loader
-    # def load_user(user_id):
-    #     user_dect = db.users.find_one({'_id': ObjectId(user_id)})
-
-    #     return user_dect
+    @login_manager.user_loader
+    def load_user(email):
+        user = db.users.find_one({'email': email})
+        if not user:
+            return None
+        return User(user['email'], user['nickname'], user['password'], user['notes'])
 
 
     return app

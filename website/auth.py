@@ -25,10 +25,10 @@ def sign_in():
 
 
         # 데이터베이스에서 가입된 유저 찾기 및 비밀번호 대조하기
-        #user = User.get(email=email)
-        user = db.users.find_one({'email': email})
+        user = User.get(email=email)
+        #user = db.users.find_one({'email': email})
         if user:
-            if check_password_hash(user.get('password'), password1):
+            if check_password_hash(user.password, password1):
                 flash('로그인 완료', category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
@@ -42,6 +42,7 @@ def sign_in():
 
 @auth.route('/logout')
 # 로그아웃은 로그인이여야만 가능하도록 view호출 전에 로그인인지 확인요청
+@login_required
 def logout():
     logout_user()
     return render_template(url_for('auth.sign_in'))
@@ -55,16 +56,16 @@ def sign_up():
 
     if request.method == 'POST':
         # form - input의 name 속성을 기준으로 가져오기
-        email = request.form['email']
+        user_id = request.form['email']
         nickname = request.form['nickname']
         password1 = request.form['password1']
         password2 = request.form['password2']
 
         # 유효성 검사
-        user = db.users.find_one({'email': email})
+        user = db.users.find_one({'id': user_id})
         if user:
             flash("이미 가입된 이메일입니다.", category='error')
-        if len(email) < 5 :
+        if len(user_id) < 5 :
             flash("이메일은 5자 이상으로 적어주세요.", category="error")
         elif len(nickname) < 2:
             flash("닉네임은 2자 이상으로 적어주세요.", category="error")
@@ -74,7 +75,7 @@ def sign_up():
             flash("비밀번호와 비밀번호 재입력이 서로 다릅니다.", category="error")
         else:
             # if문을 모두 통과하면, Save User -> DB
-            new_user = User(email=email, nickname=nickname, password=generate_password_hash(password1, method='sha256'))
+            new_user = User(id=user_id, nickname=nickname, password=generate_password_hash(password1, method='sha256'))
             new_user.save() 
 
             # auto-login
