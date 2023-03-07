@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block title %}나만의 리스트를 만들어보세요!{% endblock %}
+
+
+<!-- contents -->
+{% block contents %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+    <div class="es_main_category">
+        <div class="es_scroll_left">
+            <p>스크롤 입니다.</p>
+        </div>
+        <div class="es_todo1">
+            <h1 class="es_text_catagorytitle" id="es_category_click">To-D0 list</h1>
+            <div class="es_smalltitle">
+                <p>title</p>
+                <p>by name</p>
+            </div>
+        </div>
+        <div class="es_todo2">
+            <h1 class="es_text_catagorytitle">To-D0 list</h1>
+            <div class="es_smalltitle">
+            </div>
+        </div>
+        <div class="es_todo2">
+            <h1 class="es_text_catagorytitle">To-D0 list</h1>
+            <div class="es_smalltitle">
+            </div>
+        </div>
+        <div class="es_todo2">
+            <h1 class="es_text_catagorytitle">To-D0 list</h1>
+            <div class="es_smalltitle">
+            </div>
+        </div>
+        <div class="es_todo3">
+            <h1 class="es_text_catagorytitle">To-D0 list</h1>
+            <div class="es_smalltitle">
+            </div>
+        </div>
+        <div class="es_scroll_right">
+            <p>스크롤 입니다.</p>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+<div class="kmy_post">
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    게시글 작성
+  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">입력</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!--카테고리-->
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">카테고리</label>
+            <select class="form-select" id="inputGroupSelect01">
+              <option selected="">-- 선택 --</option>
+              <option value="1">TO-DO</option>
+              <option value="2">WISH</option>
+              <option value="3">GOODS</option>
+              <option value="4">DEVELOP1</option>
+              <option value="5">DEVELOP2</option>
+            </select>
+          </div>
+
+          <!--닉네임-->
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">닉네임</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+          </div>
+
+          <!--TITLE-->
+          <div>
+            <input class="form-control" type="text" placeholder="TITLE(POST-IT)" aria-label="default input example">
+          </div>
+
+          <!--IMG아직-->
+          <div class="input-group mb-3">
+            <input type="file" class="form-control" id="inputGroupFile02">
+            <label class="input-group-text" for="inputGroupFile02">Upload</label>
+          </div>
+
+          <!--LIST-->
+          <div>
+            <div class="input-group mb-3">
+              <div class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
+              </div>
+              <input type="text" class="form-control" aria-label="Text input with checkbox">
+            </div>
+
+            <!--내용-->
+            <div>
+              <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                <label for="floatingTextarea">내용</label>
+              </div>
+            </div>
+
+            <!--DATE-->
+            <div class="kmy_date">
+              <label><input type="datetime-local" id="start"></label>
+              <label><input type="datetime-local" id="end"></label>
+            </div>
+          
+          
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <button type="button" class="btn btn-primary">등록</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="card-group">
+  <div class="card">
+      <div class="card-heater">
+          <h3 class="text-title">Card title</h3>
+          <small class="text-date">Date: @@@@</small>
+      </div>
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+          <p class="card-text">여기엔 코멘트 내용이 들어갑니다~ 길이가 멋대로 늘어납니다~ This is a wider card with supporting text below as a natural lead-in to additional
+              content.</p>
+      </div>
+      <div class="card-footer">
+          <small class="text-muted">#태그 #이게 #맞냐 #ㅠㅠ</small>
+      </div>
+  </div>
+  <div class="card">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+      </div>
+      <div class="card-footer">
+          <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+  </div>
+  <div class="card">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+              content. This card has even longer content than the first to show that equal height action.</p>
+      </div>
+      <div class="card-footer">
+          <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+  </div>
+  <div class="card">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+              content. This card has even longer content than the first to show that equal height action.</p>
+      </div>
+      <div class="card-footer">
+          <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}
