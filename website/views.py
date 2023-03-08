@@ -3,20 +3,66 @@
 
 from flask import Blueprint, redirect, render_template, request, flash, url_for, jsonify
 from flask_login import login_required, current_user
-from .models import Note
+from .models import Note, Wishlist, User
 from . import db
 from bson.objectid import ObjectId
+from bson import json_util
 # 뷰를 정의하여 보여질 페이지와 경로를 정의
 # '클라이언트 요청 > 서버의 응답'을 과정을 세부적이게 구현할 필요가 없음
 views = Blueprint('views', __name__)
 
 
-@views.route('/')
+# @views.route('/')
+# @login_required
+# def home():
+#     all_wishlists = list(db.wishlist.find({}))
+#     return render_template('home.html'), json_util.dumps({'result': all_wishlists})
+
+
+@views.route('/detail')
 @login_required
-def home():
+def detail():
+    return render_template('detail.html')
+
+
+@views.route('/', methods=['GET', 'POST'])
+def wishlist():
+    if request.method == "POST":
+        # wishlist_give찾음 wishlist_receive라는 변수에 넣고 print하고 msg 전달하고 -> index.html
+        inputGroupSelect01 = request.form['inputGroupSelect01_give']
+        mypostit = request.form['mypostit_give']
+        myoneline = request.form['myoneline_give']
+        floatingTextarea = request.form['floatingTextarea_give']
+        myurl = request.form['myurl_give']
+        mydate = request.form['mydate_give']
+
+        # 유효성 검사
+        if len(mypostit) < 1 or len(myoneline) < 1:
+            flash("제목 또는 한줄다짐 내용이 없습니다. 1자 이상 적어주세요.", category="error")
+        elif len(floatingTextarea) > 300:
+            flash("내용이 너무 깁니다. 300자 이내로 작성해주세요.", category="error")
+        else:
+            new_list = Wishlist(inputGroupSelect01=inputGroupSelect01,
+                                mypostit=mypostit,
+                                myoneline=myoneline,
+                                floatingTextarea=floatingTextarea,
+                                myurl=myurl,
+                                mydate=mydate,
+                                email=current_user.email)
+            new_list.save()
+            flash("메모 생성 완료", category="success")
+            return redirect(url_for('views.wishlist'))
+
     return render_template('home.html')
 
 
+@views.route("/wishlist", methods=["GET"])
+def wishlist_get():
+    all_wishlists = list(db.wishlist.find({}))
+    return json_util.dumps({'result': all_wishlists})
+
+
+######################################################
 @views.route('/memo', methods=['GET', 'POST'])
 @login_required
 def memo():
@@ -34,7 +80,8 @@ def memo():
             flash("내용이 너무 깁니다. 2000자 이내", category="error")
         else:
             # note 인스턴스 생성 -> DB에 저장
-            new_note = Note(title=title, content=content,
+            new_note = Note(title=title,
+                            content=content,
                             email=current_user.email)
             new_note.save()
             flash("메모 생성 완료", category="success")

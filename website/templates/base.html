@@ -9,6 +9,11 @@
   <!-- bootstrap CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+  <!--jquery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 
   <!-- 폰트 -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -16,60 +21,210 @@
   <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet" />
   <title>{% block title %}여기에 타이틀을 적으세요!{% endblock %}</title>
 
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/es_css.css') }}">
+  <!-- css가져오기 -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/esstyle.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/myo.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/sh.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/mystyle.css') }}">
 
   <script>
-    function hey() {
-      let formData = new FormData();
-      formData.append("test_give", "test");
+    const es_container = document.querySelector('.es_main');
+    let es_isMoving = false;
+    let scrollX = 0;
+    let mouseX = 0;
+    const sensitivity = 0.1;
 
-      fetch("/test", { method: "POST", body: formData })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          alert(data["msg"]);
-        });
-    }
-
-    $(document).ready(function () {
-      listing();
+    es_container.addEventListener('mouseenter', (event) => {
+      isMoving = true;
+      mouseX = event.clientX;
+      scrollX = container.scrollLeft;
     });
 
-    function listing() {
-      fetch("/test")
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-        });
-    }
+    es_container.addEventListener('mousemove', (event) => {
+      if (!isMoving) {
+        return;
+      }
 
-    const es_container = document.querySelector('.es_main');
-        let es_isMoving = false;
-        let scrollX = 0;
-        let mouseX = 0;
-        const sensitivity = 0.1;
+      const deltaX = event.clientX - mouseX;
+      es_container.scrollLeft = scrollX - deltaX * sensitivity;
+    });
 
-        es_container.addEventListener('mouseenter', (event) => {
-            isMoving = true;
-            mouseX = event.clientX;
-            scrollX = container.scrollLeft;
-        });
-
-        es_container.addEventListener('mousemove', (event) => {
-            if (!isMoving) {
-                return;
-            }
-
-            const deltaX = event.clientX - mouseX;
-            es_container.scrollLeft = scrollX - deltaX * sensitivity;
-        });
-
-        es_container.addEventListener('mouseleave', () => {
-            isMoving = false;
-        });
+    es_container.addEventListener('mouseleave', () => {
+      isMoving = false;
+    });
 
   </script>
   <style>
+    /*공민영님 스타일 시작*/
+    * {
+      padding: 0px;
+      margin: 0px;
+      font-family: "Jua", sans-serif;
+    }
+
+    .sh-card-box {
+      /*background-color: brown;*/
+      width: 95%;
+      max-width: 1400px;
+      margin: 20px auto 20px auto;
+
+      box-shadow: inset 0px 0px 7px #c0c0c0;
+      /*z-index: 1;*/
+      padding-top: 30px;
+      padding-bottom: 30px;
+      /*padding: 40px;*/
+      border-radius: 5px;
+    }
+
+    .sh-scroll {
+      overflow-x: scroll;
+      margin-right: 30px;
+      margin-left: 30px;
+    }
+
+    .sh-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .row {
+      /*background-color: chocolate;*/
+      /*flex-direction: row-reverse;*/
+      flex-wrap: nowrap;
+    }
+
+    .card {
+      /*background-color: brown;*/
+      margin-right: 3px;
+      box-shadow: 0px 0px 8px #d9d9d9;
+    }
+
+    .sh-heater-likebox {
+      /*background-color: chocolate;*/
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      justify-items: center;
+    }
+
+    .sh-heater {
+      /*background-color: green;*/
+      padding: 12px 0px 0px 10px;
+      height: 36px;
+    }
+
+    .sh-title {
+      /*background-color: brown;*/
+      font-size: 18px;
+      margin-left: 3px;
+
+      width: 220px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sh-heater-in {
+      /*background-color: blue;*/
+      height: 32px;
+      border-bottom: 1px solid rgba(0, 0, 0, .125);
+      padding: 3px 0px 10px 13px;
+    }
+
+    .sh-date {
+      /*background-color: #ff4343;*/
+      font-size: 13px;
+      color: #6c757d;
+    }
+
+    .sh-like-box {
+      /*background-color: blanchedalmond;*/
+      width: 50px;
+      height: 68px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      /*margin-right: 2px;*/
+      padding-top: 5px;
+      margin-right: 10px;
+    }
+
+    .sh-like {
+      /*background-color: blue;*/
+      width: 25px;
+      height: 22px;
+
+      background-image: url("https://i.postimg.cc/L5KKPpqr/heart.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 18px;
+    }
+
+    .sh-like:hover {
+      background-image: url("https://i.postimg.cc/W1xzWwnG/heart-2.png");
+    }
+
+    .sh-like-count {
+      /*background-color: chocolate;*/
+      font-size: 14px;
+      color: #ff4343;
+      /*margin-bottom: 11px;*/
+    }
+
+    .card-img-top {
+      border-radius: 0px;
+      border-bottom: 1px solid rgba(0, 0, 0, .125);
+
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .card-body {
+      padding: 10px;
+      /*background-color: blanchedalmond;*/
+    }
+
+    .card-text {
+      /*background-color: blue;*/
+      color: #3b3b3b;
+      height: 140px;
+      text-align: justify;
+      overflow: auto;
+      box-shadow: inset 0 0 10px white;
+      /*overflow-clip-margin: 0;*/
+    }
+
+    .card-text::-webkit-scrollbar {
+      /*background-color: transparent;*/
+      width: 1px;
+    }
+
+    .sh-username {
+      /*background-color: aqua;*/
+      margin: 0px;
+      padding: 0px;
+      color: #282828;
+      font-size: 16px;
+
+      text-align: right;
+      /*border-bottom: 3px double #282828;*/
+    }
+
+    .row-cols-1>* {
+      flex: 1;
+    }
+
+    /*공민영님 스타일 시작*/
+
+
+
+
+
+
     body {
       font-family: "Jua", sans-serif;
     }
@@ -99,7 +254,6 @@
     .kmy_btn>button {
       margin-right: 10px;
     }
-    
   </style>
 </head>
 
@@ -108,63 +262,65 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
     crossorigin="anonymous"></script>
-
+  <!-- 민영님 js -->
+  <script src="{{ url_for('static', filename='js/home.js') }}"></script>
   <!-- header -->
 
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                {% if current_user.is_authenticated %}
-                <!-- 로그인 되었을 때 -->
-                <li class="nav-item">
-                    <a href="/" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/logout" class="nav-link">Log Out</a>
-                </li>
-                {% else %}
-                <!-- 로그인 안되었을 때 -->
-                <li class="nav-item">
-                    <a href="/sign-in" class="nav-link">Sign In</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/sign-up" class="nav-link">Sign Up</a>
-                </li>
-                {% endif %}
-            </ul>
-    </div>
-</nav>
-    <!-- Message Flashing : 서버에서 flash를 보내면 뜨는 부분-->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                {% if category == "error" %}         
-                <!-- error 메시지 -->
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                {% elif category == "success" %}
-                <!-- success 메시지 -->
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                {% endif %}
-            {% endfor %}
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        {% if current_user.is_authenticated %}
+        <!-- 로그인 되었을 때 -->
+        <li class="nav-item">
+          <a href="/" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="/logout" class="nav-link">Log Out</a>
+        </li>
+        {% else %}
+        <!-- 로그인 안되었을 때 -->
+        <li class="nav-item">
+          <a href="/sign-in" class="nav-link">Sign In</a>
+        </li>
+        <li class="nav-item">
+          <a href="/sign-up" class="nav-link">Sign Up</a>
+        </li>
         {% endif %}
-    {% endwith %}
+      </ul>
+    </div>
+  </nav>
+  <!-- Message Flashing : 서버에서 flash를 보내면 뜨는 부분-->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for category, message in messages %}
+  {% if category == "error" %}
+  <!-- error 메시지 -->
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% elif category == "success" %}
+  <!-- success 메시지 -->
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
 
   <!-- contents -->
   <div class="container">
-  {% block contents %}
-  여기에 내용을 적으세요!
-  {% endblock %}
-</div>
+    {% block contents %}
+    여기에 내용을 적으세요!
+    {% endblock %}
+  </div>
 
 
   <!-- footer -->
@@ -181,30 +337,39 @@
 
     <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
       <li class="ms-3">
-        <a href="https://github.com/" style="color:black"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-github"
-          viewBox="0 0 16 16">
-          <path
-            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
-        </svg></a>
+        <a href="https://github.com/" style="color:black"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+            fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+            <path
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+          </svg></a>
       </li>
       <li>
-        <a href="https://getbootstrap.kr/" style="color:black"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-bootstrap-fill" viewBox="0 0 16 16">
-          <path d="M6.375 7.125V4.658h1.78c.973 0 1.542.457 1.542 1.237 0 .802-.604 1.23-1.764 1.23H6.375zm0 3.762h1.898c1.184 0 1.81-.48 1.81-1.377 0-.885-.65-1.348-1.886-1.348H6.375v2.725z"/>
-          <path d="M4.002 0a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4V4a4 4 0 0 0-4-4h-8zm1.06 12V3.545h3.399c1.587 0 2.543.809 2.543 2.11 0 .884-.65 1.675-1.483 1.816v.1c1.143.117 1.904.931 1.904 2.033 0 1.488-1.084 2.396-2.888 2.396H5.062z"/>
-        </svg></a>
-      </li>
-      <li>
-        <a href="https://learn.microsoft.com/ko-kr/cpp/mfc/html-basics?view=msvc-170" style="color:black">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-filetype-html" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M14 4.5V11h-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5Zm-9.736 7.35v3.999h-.791v-1.714H1.79v1.714H1V11.85h.791v1.626h1.682V11.85h.79Zm2.251.662v3.337h-.794v-3.337H4.588v-.662h3.064v.662H6.515Zm2.176 3.337v-2.66h.038l.952 2.159h.516l.946-2.16h.038v2.661h.715V11.85h-.8l-1.14 2.596H9.93L8.79 11.85h-.805v3.999h.706Zm4.71-.674h1.696v.674H12.61V11.85h.79v3.325Z"/>
+        <a href="https://getbootstrap.kr/" style="color:black"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+            height="32" fill="currentColor" class="bi bi-bootstrap-fill" viewBox="0 0 16 16">
+            <path
+              d="M6.375 7.125V4.658h1.78c.973 0 1.542.457 1.542 1.237 0 .802-.604 1.23-1.764 1.23H6.375zm0 3.762h1.898c1.184 0 1.81-.48 1.81-1.377 0-.885-.65-1.348-1.886-1.348H6.375v2.725z" />
+            <path
+              d="M4.002 0a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4V4a4 4 0 0 0-4-4h-8zm1.06 12V3.545h3.399c1.587 0 2.543.809 2.543 2.11 0 .884-.65 1.675-1.483 1.816v.1c1.143.117 1.904.931 1.904 2.033 0 1.488-1.084 2.396-2.888 2.396H5.062z" />
           </svg></a>
       </li>
       <li>
         <a href="https://learn.microsoft.com/ko-kr/cpp/mfc/html-basics?view=msvc-170" style="color:black">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
-            <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-            <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
-            <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-filetype-html"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M14 4.5V11h-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5Zm-9.736 7.35v3.999h-.791v-1.714H1.79v1.714H1V11.85h.791v1.626h1.682V11.85h.79Zm2.251.662v3.337h-.794v-3.337H4.588v-.662h3.064v.662H6.515Zm2.176 3.337v-2.66h.038l.952 2.159h.516l.946-2.16h.038v2.661h.715V11.85h-.8l-1.14 2.596H9.93L8.79 11.85h-.805v3.999h.706Zm4.71-.674h1.696v.674H12.61V11.85h.79v3.325Z" />
+          </svg></a>
+      </li>
+      <li>
+        <a href="https://learn.microsoft.com/ko-kr/cpp/mfc/html-basics?view=msvc-170" style="color:black">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-journal-text"
+            viewBox="0 0 16 16">
+            <path
+              d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+            <path
+              d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+            <path
+              d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
           </svg></a>
       </li>
     </ul>

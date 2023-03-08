@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}나만의 리스트를 만들어보세요!{% endblock %}
+
+
+<!-- contents -->
+{% block contents %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="myo_detail_zone">
+    <div class="myo_post">
+        <!-- ▼ 세희님 폼 ▼-->
+        <div class="col">
+            <div class="card" style="width: 280px">
+                <div class="sh-heater-likebox">
+                    <div class="sh-heater-box">
+                        <div class="sh-heater">
+                            <p class="sh-title">Title</p>
+                        </div>
+                        <div class="sh-heater-in">
+                            <p class="sh-date">Date-@@-@@</p>
+                        </div>
+                    </div>
+                    <div class="sh-like-box">
+                        <div class="sh-like" onclick="like()"></div>
+                        <span class="sh-like-count">0</span>
+                    </div>
+                </div>
+                <img src="https://i.postimg.cc/Kc3jvT7d/marble-2398946.jpg" class="card-img-top" alt="..." />
+                <div class="card-body">
+                    <!--<h5 class="card-title">Card title</h5>-->
+                    <p class="card-text">Comment</p>
+                    <div class="sh-username">by. user_name</div>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">[ Category ]</small>
+                </div>
+            </div>
+        </div>
+        <!-- ▲ 세희님 폼 ▲-->
+    </div>
+
+    <div class="myo_comment">
+        <div class="myo_comment_header">
+            <span>댓글</span>
+            <!-- Button trigger modal -->
+            <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="myo_btn_comment"></button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- Header 모달 제목 + 닫기버튼 -->
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">댓글작성</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- 게시글제목 -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">게시글 제목</span>
+                            </div>
+
+                            <!--닉네임 + 공개여부-->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1" style="font-weight: bold">닉네임</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" value=""
+                                        aria-label="Checkbox for following text input" />비공개
+                                </div>
+                            </div>
+
+                            <!--내용-->
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                                    style="height: 200px"></textarea>
+                                <label for="floatingTextarea" style="font-size: medium">comment</label>
+                            </div>
+                        </div>
+
+                        <!-- Footter 닫기 등록 버튼 -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                닫기
+                            </button>
+                            <button type="button" class="btn btn-primary">등록</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="myo_comment_list">
+            <div class="myo_comment_inlist">
+                <div class="myo_comment_content">
+                    <span>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
+                        댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
+                    </span>
+                </div>
+                <div class="myo_comment_name">
+                    <span>by 닉네임</span>
+                </div>
+            </div>
+            <div class="myo_comment_inlist">
+                <div class="myo_comment_content">
+                    <span>댓글내용 댓글내용 댓글내용 댓글내용</span>
+                </div>
+                <div class="myo_comment_name">
+                    <span>by 닉네임</span>
+                </div>
+            </div>
+            <div class="myo_comment_inlist">
+                <div class="myo_comment_content">
+                    <span>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
+                        댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
+                    </span>
+                </div>
+                <div class="myo_comment_name">
+                    <span>by 닉네임</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

@@ -1,0 +1,115 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+
+* {
+  text-align: center;
+  font-family: "Jua", sans-serif;
+}
+
+.es_main_category {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 auto;
+  padding: 40px;
+  gap: 40px;
+
+  width: 1120px;
+  height: 500px;
+
+  overflow-x: scroll;
+  /* background: #fffcfc; */
+  border-radius: 12px;
+
+  box-shadow: 5px 8px 1px 1px #9e9bb3;
+}
+
+.es_main_category::-webkit-scrollbar {
+  display: none;
+}
+
+.es_main_category > div {
+  width: 320px;
+  height: 420px;
+  margin: 20px auto 20px auto;
+
+  box-shadow: 3px 5px 5px 5px #b8b5cf;
+  border-radius: 10px;
+
+  flex: none;
+}
+
+.es_todo1 {
+  background: #fff7f6;
+}
+
+.es_todo2 {
+  background: #ecf7ff;
+}
+
+.es_todo3 {
+  background: #effcf4;
+}
+
+.es_todo4 {
+  background: #fce1fc;
+}
+
+.es_todo5 {
+  background: #eddefc;
+}
+
+.es_todo6 {
+  background: #fbfde4;
+}
+
+.es_smalltitle {
+  position: absolute;
+  width: 66px;
+  height: 66px;
+  margin: 10px;
+
+  box-shadow: 1px 2px 1px 2px #b8b5cf;
+  border-radius: 10px;
+}
+
+.es_smalltitleimg {
+  width: 66px;
+  height: 66px;
+
+  display: flex;
+
+  background-size: cover;
+  background-position: center;
+
+  background-image: url("../img/j-lee-2l4icDOFidc-unsplash.jpg");
+
+  border-radius: 10px;
+  font-size: 5px;
+  color: white;
+
+  cursor: pointer;
+}
+
+.es_text_catagorytitle {
+  margin-top: 25px;
+}
+
+.es_scoll_left:hover {
+  width: 80px;
+  height: 500px;
+
+  order: -2;
+  background: red;
+  scroll-behavior: smooth;
+}
+
+.es_scoll_right {
+  width: 1120px;
+  height: 500px;
+
+  flex: auto;
+}
+
+.test1 {
+  margin-top: 100px;
+}

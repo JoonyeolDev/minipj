@@ -29,8 +29,8 @@ class User(UserMixin):
             'nickname': self.nickname,
             'password': self.password,
         }
-        result = db.users.insert_one(user_data)
-        self._id = result.inserted_id
+        db.users.insert_one(user_data)
+
 
     @classmethod
     def get(cls, email):
@@ -73,5 +73,26 @@ class Note:
                 email=note_data['email'],
                 id=note_data['_id'])
 
+# Wishlist 정의
 
-# Note Model 정의
+class Wishlist:
+    def __init__(self, inputGroupSelect01, mypostit, myoneline, floatingTextarea, myurl, mydate, email):
+        self.inputGroupSelect01_receive = inputGroupSelect01
+        self.mypostit = mypostit
+        self.myoneline = myoneline
+        self.floatingTextarea = floatingTextarea
+        self.myurl = myurl
+        self.mydate = mydate or datetime.now()
+        self.email = email
+
+    def save(self):
+        wishlist_data = {
+            'inputGroupSelect01':self.inputGroupSelect01_receive,
+            'mypostit':self.mypostit,
+            'myoneline':self.myoneline,
+            'floatingTextarea':self.floatingTextarea,
+            'myurl':self.myurl,
+            'mydate':self.mydate,
+            'email':self.email
+            }
+        db.wishlist.insert_one(wishlist_data)
