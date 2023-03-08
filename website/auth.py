@@ -23,7 +23,6 @@ def sign_in():
         email = request.form['email']
         password1 = request.form['password1']
 
-
         # 데이터베이스에서 가입된 유저 찾기 및 비밀번호 대조하기
         user = User.get(email=email)
         #user = db.users.find_one({'email': email})

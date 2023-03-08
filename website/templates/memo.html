@@ -3,6 +3,8 @@
 {% block title %}나만의 리스트를 만들어보세요!{% endblock %}
 
 
+
+
 <!-- contents -->
 {% block contents %}
 <br>
@@ -20,7 +22,8 @@
         <label for="note-title">Title</label>
     </div>
     <div class="form-floating">
-        <textarea name="note-content" class="form-control" placeholder="Leave a content here" id="note-content"></textarea>
+        <textarea name="note-content" class="form-control" placeholder="Leave a content here"
+            id="note-content"></textarea>
         <label for="note-content">Content</label>
     </div>
     <button type="submit" class="btn btn-primary">메모 저장</button>
@@ -33,25 +36,62 @@
     {% for note in notes %}
     <a href="#" class="list-group-item list-group-item-action">
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-2">{{note.title}}</h5>
-          <small class="text-muted">{{note.datetime}}</small>
+            <h5 class="mb-2">{{note.title}}</h5>
+            <small class="text-muted">{{note.datetime}}</small>
         </div>
         <p class="mb-1">{{note.content}}</p>
 
         <!-- 메모 삭제 버튼 -->
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <button class="btn btn-primary" type="button">수정</button>
-            <button class="btn btn-primary" type="button">삭제</button>
+            <button class="btn btn-primary" type="button" onclick="deleteNote({{note._id}})">삭제</button>
         </div>
-    </a>  
+    </a>
     {% endfor %}
 </div>
-{% for note in notes %}
-<div class="note">
-    <h2>{{ note.title }}</h2>
-    <p>{{ note.content }}</p>
+
+<!-- 메모 수정 Modal -->
+<!-- Modal -->
+<div class="modal fade" id="updateNoteModal" tabindex="-1" aria-labelledby="updateNoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateNoteModalLabel">메모 수정</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary">변경</button>
+            </div>
+        </div>
+    </div>
 </div>
-{% endfor %}
+
+<script>
+    const deleteNote = function (noteId) {
+        console.log(`삭제할 메모 id ${noteId}`);
+
+        // 전달할 데이터 정보(메모 정보)
+        let note = {
+            noteId: noteId
+        }
+
+        // 삭제 ajax
+        fetch('/memo/delete-note', {
+            method: 'POST',
+            body: JSON.stringify(note),
+            headers: {
+                "Content-Type": "application/json"
+            },
+        }).then((response) => response.json())
+            .then(() => {
+                window.location.href = '/'; // 새로고침
+            });
+    }
+</script>
 <br>
 <br>
 <br>

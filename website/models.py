@@ -1,24 +1,28 @@
+from flask_login import UserMixin
+from datetime import datetime
+from bson.objectid import ObjectId
 from . import db
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://joonyeol:1234@sparta.afgjtfy.mongodb.net/?retryWrites=true&w=majority')
+client = MongoClient(
+    'mongodb+srv://joonyeol:1234@sparta.afgjtfy.mongodb.net/?retryWrites=true&w=majority')
 db = client.dbsparta
 
 # forign key 역할을 해주는 objectid
-from bson.objectid import ObjectId
-from datetime import datetime
 # flask_login의 UserMixin 클래스 상속
 # flask_login은 Flask에 대한 사용자 세션 관리를 제공
 # 세션에 활성 사용자의 id를 저장하고 쉽게 로그인/로그아웃 할 수 있음
 # 로그인 or 로그아웃한 사용자의 보기 제한 등
-from flask_login import UserMixin
 
-# define User Model
+# User Model 정의
+
+
 class User(UserMixin):
-    def __init__(self, email, nickname, password):
+    def __init__(self, email, nickname, password, image_path=None):
         self.email = email
         self.nickname = nickname
         self.password = password
- 
+        self.image_path = image_path
+
     def save(self):
         user_data = {
             'email': self.email,
@@ -37,14 +41,12 @@ class User(UserMixin):
                     password=user_data['password'])
         else:
             return None
+
     def get_id(self):
         return str(self.email)
-    def get_notes(self):
-        return [Note.get(note_data) for note_data in db.notes.find({'email': self.email})]
 
 
-
-# define Note Model
+# Note Model 정의
 
 class Note:
     def __init__(self, title, content, email):
@@ -62,10 +64,14 @@ class Note:
         }
         db.notes.insert_one(note_data)
 
-
     @classmethod
-    def get(cls, note_data):
+    def get(cls, email):
+        note_data = list(db.notes.find({'email': email}))
         return cls(title=note_data['title'],
                 content=note_data['content'],
                 datetime=note_data['datetime'],
-                email=note_data['email'])
+                email=note_data['email'],
+                id=note_data['_id'])
+
+
+# Note Model 정의
