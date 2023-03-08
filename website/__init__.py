@@ -50,7 +50,7 @@ def create_app():
         user = db.users.find_one({'email': email})
         if not user:
             return None
-        return User(user['email'], user['nickname'], user['password'], user['notes'])
+        return User(user['email'], user['nickname'], user['password'])
 
 
     return app

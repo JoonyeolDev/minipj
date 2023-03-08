@@ -14,61 +14,58 @@ from flask_login import UserMixin
 
 # define User Model
 class User(UserMixin):
-    def __init__(self, email, nickname, password, notes=None):
+    def __init__(self, email, nickname, password):
         self.email = email
         self.nickname = nickname
         self.password = password
-        self.notes = notes or [] 
+ 
     def save(self):
         user_data = {
             'email': self.email,
             'nickname': self.nickname,
             'password': self.password,
-            'notes': [note_data for note_data in self.notes]
         }
         result = db.users.insert_one(user_data)
         self._id = result.inserted_id
+
     @classmethod
     def get(cls, email):
         user_data = db.users.find_one({'email': email})
         if user_data:
             return cls(email=user_data['email'],
                     nickname=user_data['nickname'],
-                    password=user_data['password'],
-                    notes=[Note.get(note_id) for note_id in user_data['notes']])
+                    password=user_data['password'])
         else:
             return None
     def get_id(self):
         return str(self.email)
+    def get_notes(self):
+        return [Note.get(note_data) for note_data in db.notes.find({'email': self.email})]
 
 
 
 # define Note Model
 
 class Note:
-    def __init__(self, title, content, user_id):
+    def __init__(self, title, content, email):
         self.title = title
         self.content = content
         self.datetime = datetime.now()
-        self.user_id = ObjectId(user_id)
+        self.email = email
 
     def save(self):
         note_data = {
             'title': self.title,
             'content': self.content,
             'datetime': self.datetime,
-            'user_id': self.user_id
+            'email': self.email
         }
         db.notes.insert_one(note_data)
 
 
     @classmethod
-    def get(cls, note_id):
-        note_data = db.notes.find_one({'_id': ObjectId(note_id)})
-        if note_data:
-            return cls(title=note_data['title'],
-                    content=note_data['content'],
-                    datetime=note_data['datetime'],
-                    user_id=note_data['user_id'])
-        else:
-            return None
+    def get(cls, note_data):
+        return cls(title=note_data['title'],
+                content=note_data['content'],
+                datetime=note_data['datetime'],
+                email=note_data['email'])

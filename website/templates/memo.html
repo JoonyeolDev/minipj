@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}나만의 리스트를 만들어보세요!{% endblock %}
+
+
+<!-- contents -->
+{% block contents %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<!-- 메모 생성 영역 -->
+<form action="" method="post">
+    <h2 align="center">Note</h2>
+    <div class="form-floating">
+        <input name="note-title" type="text" class="form-control" id="note-title" placeholder="name@example.com">
+        <label for="note-title">Title</label>
+    </div>
+    <div class="form-floating">
+        <textarea name="note-content" class="form-control" placeholder="Leave a content here" id="note-content"></textarea>
+        <label for="note-content">Content</label>
+    </div>
+    <button type="submit" class="btn btn-primary">메모 저장</button>
+</form>
+
+
+
+<!-- 메모 조회 영역 -->
+<div class="list-group">
+    {% for note in notes %}
+    <a href="#" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-2">{{note.title}}</h5>
+          <small class="text-muted">{{note.datetime}}</small>
+        </div>
+        <p class="mb-1">{{note.content}}</p>
+
+        <!-- 메모 삭제 버튼 -->
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-primary" type="button">수정</button>
+            <button class="btn btn-primary" type="button">삭제</button>
+        </div>
+    </a>  
+    {% endfor %}
+</div>
+{% for note in notes %}
+<div class="note">
+    <h2>{{ note.title }}</h2>
+    <p>{{ note.content }}</p>
+</div>
+{% endfor %}
+<br>
+<br>
+<br>
+{% endblock %}

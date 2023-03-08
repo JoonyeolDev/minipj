@@ -109,20 +109,34 @@
     crossorigin="anonymous"></script>
 
   <!-- header -->
-  <div class="header_wrap">
-    <header>
-      <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #ffdeb1">
-        <!-- 제목 -->
-        <a class="navbar-brand mx-auto" href="#">
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
-            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-            <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
-          </svg>
-          To do Wish List</a>
-      </nav>
-    </header>
-  </div>
 
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                {% if current_user.is_authenticated %}
+                <!-- 로그인 되었을 때 -->
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/logout" class="nav-link">Log Out</a>
+                </li>
+                {% else %}
+                <!-- 로그인 안되었을 때 -->
+                <li class="nav-item">
+                    <a href="/sign-in" class="nav-link">Sign In</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/sign-up" class="nav-link">Sign Up</a>
+                </li>
+                {% endif %}
+            </ul>
+    </div>
+</nav>
     <!-- Message Flashing : 서버에서 flash를 보내면 뜨는 부분-->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}

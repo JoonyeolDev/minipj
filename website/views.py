@@ -1,8 +1,10 @@
 # Blueprint를 이용하면 플라스크 app의 모든 url을 한 곳에서 관리하지 않아도 됨
 # 여러곳에 뿌려진 url의 정의를 수집하여 한 곳을 모아줌
 
-from flask import Blueprint, render_template
+from flask import Blueprint, redirect, render_template, request, flash, url_for
 from flask_login import login_required, current_user
+from .models import Note
+from . import db
 
 # 뷰를 정의하여 보여질 페이지와 경로를 정의
 # '클라이언트 요청 > 서버의 응답'을 과정을 세부적이게 구현할 필요가 없음
@@ -14,5 +16,33 @@ def home():
     return render_template('home.html')
 
 
+@views.route('/memo', methods=['GET','POST'])
+@login_required
+def memo():
+    # POST : 메모 생성
+    if request.method == "POST":
+        title = request.form.get('note-title')
+        content = request.form.get('note-content')
+
+
+        # 유효성 검사
+        if len(title) < 1 or len(content) < 1:
+            flash("제목 또는 내용이 없습니다.", category = "error")
+        elif len(title) > 50:
+            flash("제목이 너무 깁니다. 50자 이내", category = "error")
+        elif len(content) > 2000:
+            flash("내용이 너무 깁니다. 2000자 이내", category="error")
+        else :
+            # note 인스턴스 생성 -> DB에 저장
+            new_note = Note(title=title, content=content, email=current_user.email)
+            new_note.save()
+            flash("메모 생성 완료", category="success")
+            return redirect(url_for('views.memo'))
+        
+    return render_template('memo.html')
+
+def note_list():
+    notes = Note(email=current_user.email)
+    return render_template('memo.html', notes=notes)
 # __init__.py 로 ㄱㄱ
 
