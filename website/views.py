@@ -18,6 +18,10 @@ views = Blueprint('views', __name__)
 #     all_wishlists = list(db.wishlist.find({}))
 #     return render_template('home.html'), json_util.dumps({'result': all_wishlists})
 
+@views.route('/index')
+@login_required
+def index():
+    return render_template('index.html')
 
 @views.route('/detail')
 @login_required
