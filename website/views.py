@@ -12,12 +12,6 @@ from bson import json_util
 views = Blueprint('views', __name__)
 
 
-# @views.route('/')
-# @login_required
-# def home():
-#     all_wishlists = list(db.wishlist.find({}))
-#     return render_template('home.html'), json_util.dumps({'result': all_wishlists})
-
 @views.route('/index')
 @login_required
 def index():
@@ -27,9 +21,10 @@ def index():
 @views.route('/<string:post_id>', methods=['GET', 'POST'])
 def get_post(post_id):
     post = db.wishlist.find_one({'_id': ObjectId(post_id)}, {'_id': False})
+    post['date']=str(post['mydate']).split(' ')[0]
     comments = list(db.comments.find({'post_id': post_id}, {'_id': False}))
     for co in comments:
-        date = str(co['date']).split('T')[0]
+        date = str(co['mydate']).split(' ')[0]
         co['date'] = date
     return render_template('detail.html', post=post, comments=comments, post_id=post_id)
 
@@ -39,13 +34,14 @@ def save_comment():
     comments = request.form['comment']
     post_id = request.form['post_id']
     new_list = Comment(comment=comments,
-                        post_id=post_id,
-                        email=current_user.email,
-                        nickname=current_user.nickname,
-                        )
+                       post_id=post_id,
+                       email=current_user.email,
+                       nickname=current_user.nickname,
+                       )
     new_list.save()
     flash("댓글 생성 완료", category="success")
     return redirect(url_for('views.get_post', post_id=post_id))
+
 
 @views.route('/', methods=['GET', 'POST'])
 def wishlist():
@@ -86,7 +82,7 @@ def wishlist_get():
     all_wishlists = list(db.wishlist.find({}))
     for wishlist in all_wishlists:
         wishlist['post_id'] = str(wishlist['_id'])
-        if (wishlist['myurl'] == "" ):
+        if (wishlist['myurl'] == ""):
             wishlist['myurl'] = "https://previews.123rf.com/images/yayayoy/yayayoy1511/yayayoy151100006/48394424-%EC%9B%83%EB%8A%94-%EB%88%88%EA%B3%BC-%EC%9E%A5%EB%AF%B8-%EB%B9%9B-%EB%BA%A8%EA%B3%BC-%EC%9D%B4%EB%AA%A8%ED%8B%B0%EC%BD%98-%EB%AF%B8%EC%86%8C.jpg"
         date = str(wishlist['mydate']).split(' ')[0]
         wishlist['mydate'] = date
@@ -119,6 +115,8 @@ def memo():
             return redirect(url_for('views.memo'))
 
     notes = list(db.notes.find({'email': current_user.email}))
+    for note in notes:
+        note['note_id'] = str(note['_id'])
     return render_template('memo.html', notes=notes)
 
 
