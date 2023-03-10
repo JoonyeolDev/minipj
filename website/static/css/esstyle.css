@@ -63,7 +63,7 @@
 }
 
 .es_smalltitle {
-  position: absolute;
+  display: inline-block;
   width: 66px;
   height: 66px;
   margin: 10px;
@@ -81,13 +81,18 @@
   background-size: cover;
   background-position: center;
 
-  background-image: url("../img/j-lee-2l4icDOFidc-unsplash.jpg");
-
   border-radius: 10px;
   font-size: 5px;
   color: white;
 
   cursor: pointer;
+}
+
+.es_smalltitleimg img {
+  width: 66px;
+  height: 66px;
+  background-image: cover;
+  border-radius: 10px;
 }
 
 .es_text_catagorytitle {

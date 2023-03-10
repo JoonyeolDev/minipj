@@ -3,9 +3,9 @@
 
 from flask import Blueprint, redirect, render_template, request, flash, url_for, jsonify
 from flask_login import login_required, current_user
-from .models import Note, Wishlist, User
+from .models import Note, Wishlist, Comment
 from . import db
-from bson.objectid import ObjectId
+from bson import ObjectId
 from bson import json_util
 # 뷰를 정의하여 보여질 페이지와 경로를 정의
 # '클라이언트 요청 > 서버의 응답'을 과정을 세부적이게 구현할 필요가 없음
@@ -23,11 +23,29 @@ views = Blueprint('views', __name__)
 def index():
     return render_template('index.html')
 
-@views.route('/detail')
-@login_required
-def detail():
-    return render_template('detail.html')
 
+@views.route('/<string:post_id>', methods=['GET', 'POST'])
+def get_post(post_id):
+    post = db.wishlist.find_one({'_id': ObjectId(post_id)}, {'_id': False})
+    comments = list(db.comments.find({'post_id': post_id}, {'_id': False}))
+    for co in comments:
+        date = str(co['date']).split('T')[0]
+        co['date'] = date
+    return render_template('detail.html', post=post, comments=comments, post_id=post_id)
+
+
+@views.route('/create_comment', methods=['POST'])
+def save_comment():
+    comments = request.form['comment']
+    post_id = request.form['post_id']
+    new_list = Comment(comment=comments,
+                        post_id=post_id,
+                        email=current_user.email,
+                        nickname=current_user.nickname,
+                        )
+    new_list.save()
+    flash("댓글 생성 완료", category="success")
+    return redirect(url_for('views.get_post', post_id=post_id))
 
 @views.route('/', methods=['GET', 'POST'])
 def wishlist():
@@ -52,7 +70,9 @@ def wishlist():
                                 floatingTextarea=floatingTextarea,
                                 myurl=myurl,
                                 mydate=mydate,
-                                email=current_user.email)
+                                email=current_user.email,
+                                nickname=current_user.nickname,
+                                )
             new_list.save()
             flash("메모 생성 완료", category="success")
             return redirect(url_for('views.wishlist'))
@@ -61,8 +81,15 @@ def wishlist():
 
 
 @views.route("/wishlist", methods=["GET"])
+@login_required
 def wishlist_get():
     all_wishlists = list(db.wishlist.find({}))
+    for wishlist in all_wishlists:
+        wishlist['post_id'] = str(wishlist['_id'])
+        if (wishlist['myurl'] == "" ):
+            wishlist['myurl'] = "https://previews.123rf.com/images/yayayoy/yayayoy1511/yayayoy151100006/48394424-%EC%9B%83%EB%8A%94-%EB%88%88%EA%B3%BC-%EC%9E%A5%EB%AF%B8-%EB%B9%9B-%EB%BA%A8%EA%B3%BC-%EC%9D%B4%EB%AA%A8%ED%8B%B0%EC%BD%98-%EB%AF%B8%EC%86%8C.jpg"
+        date = str(wishlist['mydate']).split(' ')[0]
+        wishlist['mydate'] = date
     return json_util.dumps({'result': all_wishlists})
 
 

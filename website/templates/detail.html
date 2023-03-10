@@ -20,10 +20,10 @@
                 <div class="sh-heater-likebox">
                     <div class="sh-heater-box">
                         <div class="sh-heater">
-                            <p class="sh-title">Title</p>
+                            <p class="sh-title">{{ post.myoneline }}</p>
                         </div>
                         <div class="sh-heater-in">
-                            <p class="sh-date">Date-@@-@@</p>
+                            <p class="sh-date">{{ post.mydate }}</p>
                         </div>
                     </div>
                     <div class="sh-like-box">
@@ -31,14 +31,14 @@
                         <span class="sh-like-count">0</span>
                     </div>
                 </div>
-                <img src="https://i.postimg.cc/Kc3jvT7d/marble-2398946.jpg" class="card-img-top" alt="..." />
+                <img src="{{ post.myurl }}" class="card-img-top" alt="..." />
                 <div class="card-body">
                     <!--<h5 class="card-title">Card title</h5>-->
-                    <p class="card-text">Comment</p>
-                    <div class="sh-username">by. user_name</div>
+                    <p class="card-text">{{ post.floatingTextarea }}</p>
+                    <div class="sh-username">by. {{ current_user.nickname }}</div>
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted">[ Category ]</small>
+                    <small class="text-muted">[ {{ post.inputGroupSelect01 }} ]</small>
                 </div>
             </div>
         </div>
@@ -64,12 +64,13 @@
                         <div class="modal-body">
                             <!-- 게시글제목 -->
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">게시글 제목</span>
+                                <span class="input-group-text" id="basic-addon1">{{ post.myoneline }}</span>
                             </div>
 
                             <!--닉네임 + 공개여부-->
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1" style="font-weight: bold">닉네임</span>
+                                <span class="input-group-text" id="basic-addon1" style="font-weight: bold">작성자 :
+                                    {{current_user.nickname}}</span>
                                 <div class="input-group-text">
                                     <input class="form-check-input mt-0" type="checkbox" value=""
                                         aria-label="Checkbox for following text input" />비공개
@@ -78,9 +79,9 @@
 
                             <!--내용-->
                             <div class="form-floating">
-                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
-                                    style="height: 200px"></textarea>
-                                <label for="floatingTextarea" style="font-size: medium">comment</label>
+                                <textarea class="form-control" placeholder="Leave a comment here"
+                                    id="myo_floatingTextarea" style="height: 200px"></textarea>
+                                <label for="myo_floatingTextarea" style="font-size: medium">comment</label>
                             </div>
                         </div>
 
@@ -89,7 +90,8 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                 닫기
                             </button>
-                            <button type="button" class="btn btn-primary">등록</button>
+                            <button type="button" class="btn btn-primary"
+                                onclick="save_comment('{{ post_id }}')">등록</button>
                         </div>
                     </div>
                 </div>
@@ -97,34 +99,17 @@
         </div>
 
         <div class="myo_comment_list">
+            {% for co in comments %}
             <div class="myo_comment_inlist">
                 <div class="myo_comment_content">
-                    <span>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
-                        댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
+                    <span>{{co.comment}}
                     </span>
                 </div>
                 <div class="myo_comment_name">
-                    <span>by 닉네임</span>
+                    <span>by {{co.nickname}} </span>
                 </div>
             </div>
-            <div class="myo_comment_inlist">
-                <div class="myo_comment_content">
-                    <span>댓글내용 댓글내용 댓글내용 댓글내용</span>
-                </div>
-                <div class="myo_comment_name">
-                    <span>by 닉네임</span>
-                </div>
-            </div>
-            <div class="myo_comment_inlist">
-                <div class="myo_comment_content">
-                    <span>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
-                        댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
-                    </span>
-                </div>
-                <div class="myo_comment_name">
-                    <span>by 닉네임</span>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>

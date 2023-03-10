@@ -14,62 +14,77 @@
 <br>
 <div class="shadow p-3 mb-5 bg-body rounded">Regular shadow</div>
 <div class="es_main_category">
-    <div class="es_todo1">'
-        <h1 class="es_text_catagorytitle" id="es_category_click">Wish</h1>
-        <div class="es_smalltitle" draggable="true">
-            <div class="es_smalltitleimg"></div>
-            <span class ="d-inline-block text-truncate" style="max-width: 85px;">
-                여기에 간이
-                제목이 들어갑니다
-            </span>
-        </div>
+  <div class="es_todo1">
+    <div>
+      <h1 class="es_text_catagorytitle" id="es_category_click">투두</h1>
     </div>
-    <div class="es_todo2">
-        <h1 class="es_text_catagorytitle">개발</h1>
-            <div class="es_smalltitle" draggable="true">
-                <div class="es_smalltitleimg">
-                    <span class="d-inline-block text-truncate" style="max-width: 85px;">
-                    여기에 간이제목이 들어갑니다.
-                </span>
-                </div>
-            </div>
-            <div class="es_smalltitle" draggable="true">
-                <div class="es_smalltitleimg"></div>
-                <span class="d-inline-block text-truncate" style="max-width: 85px;">
-                    여기에 간이제목이 들어갑니다.
-                </span>
-            </div>
-        <div class="es_smalltitle" draggable="true">
-            <div class="es_smalltitleimg"></div>
-            <span class="d-inline-block text-truncate" style="max-width: 85px;">
-                여기에 간이제목이 들어갑니다.
-            </span>
-        </div>
+    <div id="espostit1">
+      <div class="es_smalltitle" draggable="true">
+        <div class="es_smalltitleimg"></div>
+        <span class="d-inline-block text-truncate" style="max-width: 85px;">
+          포스트잇 글
+        </span>
+      </div>
     </div>
-    <div class="es_todo3">
-        <h1 class="es_text_catagorytitle">여행</h1>
-        <!-- <div class="es_smalltitle"> -->
-        <!-- </div> -->
+  </div>
+  <div class="es_todo2">
+    <div>
+      <h1 class="es_text_catagorytitle" id="es_category_click">위시</h1>
     </div>
-    <div class="es_todo4">
-        <h1 class="es_text_catagorytitle">게임</h1>
-        <!-- <div class="es_smalltitle"> -->
-        <!-- </div> -->
+    <div id="espostit2">
+      <div class="es_smalltitle" draggable="true">
+        <div class="es_smalltitleimg"></div>
+        <span class="d-inline-block text-truncate" style="max-width: 85px;">
+          포스트잇 글
+        </span>
+      </div>
     </div>
-    <div class="es_todo5">
-        <h1 class="es_text_catagorytitle">쇼핑</h1>
-        <!-- <div class="es_smalltitle">
-        </div> -->
+  </div>
+  <div class="es_todo3">
+    <div>
+      <h1 class="es_text_catagorytitle" id="es_category_click">여행</h1>
     </div>
-    <div class="es_todo6">
-        <h1 class="es_text_catagorytitle">기타</h1>
-        <!-- <div class="es_smalltitle">
-        </div> -->
+    <div id="espostit3">
+      <div class="es_smalltitle" draggable="true">
+        <div class="es_smalltitleimg"></div>
+        <span class="d-inline-block text-truncate" style="max-width: 85px;">
+          포스트잇 글
+        </span>
+      </div>
     </div>
+  </div>
+  <div class="es_todo4">
+    <div>
+      <h1 class="es_text_catagorytitle" id="es_category_click">게임</h1>
+    </div>
+    <div id="espostit4">
+      <div class="es_smalltitle" draggable="true">
+        <div class="es_smalltitleimg"></div>
+        <span class="d-inline-block text-truncate" style="max-width: 85px;">
+          포스트잇 글
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="es_todo5">
+    <div>
+      <h1 class="es_text_catagorytitle" id="es_category_click">기타</h1>
+    </div>
+    <div id="espostit5">
+      <div class="es_smalltitle" draggable="true">
+        <div class="es_smalltitleimg"></div>
+        <span class="d-inline-block text-truncate" style="max-width: 85px;">
+          포스트잇 글
+        </span>
+      </div>
+    </div>
+  </div>
 
 </div>
-<div class="test1", id ="test2">
-    여기로 이동해야 한다. 
+
+</div>
+<div class="test1" , id="test2">
+  여기로 이동해야 한다.
 </div>
 
 
@@ -84,7 +99,7 @@
 
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+<button type="button" id="w_button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
   게시글 작성
 </button>
 
@@ -100,7 +115,7 @@
       <div class="modal-body">
         <div class="mywishlist">
           <!--닉네임-->
-          <a></a>
+          <h5>nickname: {{current_user.nickname}}</h5>
 
           <!--카테고리-->
           <div class="input-group mb-3">
@@ -109,9 +124,9 @@
               <option selected>-- 선택하기 --</option>
               <option value="투두" type="text">투두</option>
               <option value="위시" type="text">위시</option>
-              <option value="리스트" type="text">리스트</option>
-              <option value="추가" type="text">추가</option>
-              <option value="추가2" type="text">추가2</option>
+              <option value="여행" type="text">여행</option>
+              <option value="게임" type="text">게임</option>
+              <option value="기타" type="text">기타</option>
             </select>
           </div>
 

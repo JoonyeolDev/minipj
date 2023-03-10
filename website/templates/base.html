@@ -10,7 +10,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!--jquery-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  
+
 
   <!-- 폰트 -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -51,7 +51,7 @@
     });
 
   </script>
-  
+
   <style>
     /*공민영님 스타일 시작*/
     * {
@@ -266,7 +266,7 @@
     <header>
       <nav class="navbar fixed-top" style="background-color: #ffdeb1">
         <div class="container-fluid" style="background-color: #ffdeb1">
-          <a class="navbar-brand mx-auto" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
+          <a class="navbar-brand mx-auto" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
               fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
               <path
                 d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
@@ -277,19 +277,23 @@
             aria-controls="offcanvasNavbar">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
               <h5 class="offcanvas-title" id="offcanvasNavbarLabel">To Do Wish List</h5>
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body" >
+            <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 {% if current_user.is_authenticated %}
                 <li class="nav-item">
                   <a class="nav-link active" href="/" aria-current="page" style="text-align: left;">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link " href="#" style="text-align: left;">Log Out</a>
+                  <a class="nav-link " href="/mypage" style="text-align: left;">Mypage</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link " href="/logout" style="text-align: left;">Log Out</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
@@ -307,7 +311,7 @@
     </header>
   </div>
 
-  
+
   <!-- Message Flashing : 서버에서 flash를 보내면 뜨는 부분-->
   {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
@@ -388,7 +392,6 @@
       </li>
     </ul>
   </footer>
-
 </body>
 
 </html>

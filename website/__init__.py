@@ -19,20 +19,18 @@ def create_app():
 # main.py로 ㄱㄱ
 
 
-    # views에서 블루프린트 인스턴스 가져오기
-    from .views import views
-
-    # 플라스크 앱에 등록하기
+    # views에서 블루프린트 인스턴스 가져오기 및 플라스크 앱에 등록
     # url_prefix : url접두사. 해당 블루프린트를 이용할 때 기본적으로 붙을 url을 적음
+    from .views import views
     app.register_blueprint(views, url_prefix='/')
-
-# main.py로 ㄱㄱ
 
     # auth에서 블루프린트 인스턴스 가져오기 및 플라스크 앱에 등록
     from .auth import auth
     app.register_blueprint(auth, url_prefix='/')
 
-# auth.py ㄱㄱ
+    # mypage에서 블루프린트 인스턴스 가져오기 및 플라스크 앱에 등록
+    from .mypage import mypage
+    app.register_blueprint(mypage, url_prefix='/')
 
     # DB에 사용할 모델 불러오기
     from .models import User, Note
